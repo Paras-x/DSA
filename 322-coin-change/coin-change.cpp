@@ -64,6 +64,10 @@ public:
 
         int ans = solve(coins, amount, dp);
 
-        return (ans == INT_MAX) ? -1 : ans;
+         if(ans == INT_MAX) {
+            return -1;
+        }else {
+            return ans;
+        }
     }
 };
