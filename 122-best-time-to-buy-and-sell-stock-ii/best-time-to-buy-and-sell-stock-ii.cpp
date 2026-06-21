@@ -24,7 +24,7 @@ public:
     }
 }; */
 
-class Solution {
+/* class Solution {
 public:
     int solve(vector<int>& prices, int i, int buy,
               vector<vector<int>>& dp) {
@@ -61,5 +61,48 @@ public:
         vector<vector<int>> dp(n, vector<int>(2, -1));
 
         return solve(prices, 0, 1, dp);
+    }
+}; */
+
+/* class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int profit = 0;
+
+        for(int i = 1; i < prices.size(); i++) {
+            if(prices[i] > prices[i - 1]) {
+                profit += prices[i] - prices[i - 1];
+            }
+        }
+
+        return profit;
+    }
+}; */
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+
+        vector<int> ahead(2, 0);
+        vector<int> curr(2, 0);
+
+        for(int i = prices.size() - 1; i >= 0; i--) {
+
+            // buy = 1
+            curr[1] = max(
+                -prices[i] + ahead[0], // kharida
+                ahead[1]               // skip kiya
+            );
+
+            // buy = 0
+            curr[0] = max(
+                prices[i] + ahead[1],  // bhecha
+                ahead[0]               // skip kiya
+            );
+
+            ahead = curr;
+        }
+
+        return ahead[1];
     }
 };
