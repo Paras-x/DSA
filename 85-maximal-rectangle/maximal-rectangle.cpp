@@ -49,7 +49,7 @@ public:
     }
 }; */
 
-/* class Solution {
+ class Solution {
 public:
     int m, n;
     vector<vector<int>> width;
@@ -109,9 +109,9 @@ public:
 
         return ans;
     }
-}; */
+}; 
 
-class Solution {
+/* class Solution {
 public:
 
     int largestRectangleArea(vector<int>& heights) {
@@ -166,4 +166,4 @@ public:
 
         return ans;
     }
-};
+}; */
