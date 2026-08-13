@@ -1,4 +1,4 @@
-class Solution {
+/* class Solution {
 public:
     int maxConsecutiveAnswers(string answerKey, int k) {
 
@@ -49,5 +49,40 @@ public:
         }
 
         return maxLen;
+    }
+}; */
+
+class Solution {
+public:
+    int maxConsecutiveAnswers(string answerKey, int k) {
+
+        int i = 0;
+        int countT = 0;
+        int countF = 0;
+        int ans = 0;
+
+        for (int j = 0; j < answerKey.size(); j++) {
+
+            if (answerKey[j] == 'T')
+                countT++;
+            else
+                countF++;
+
+            // Minimum count ko flip karke
+            // poori window same bana sakte hain
+            while (min(countT, countF) > k) {
+
+                if (answerKey[i] == 'T')
+                    countT--;
+                else
+                    countF--;
+
+                i++;
+            }
+
+            ans = max(ans, j - i + 1);
+        }
+
+        return ans;
     }
 };
