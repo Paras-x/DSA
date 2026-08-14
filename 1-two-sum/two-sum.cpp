@@ -1,4 +1,4 @@
-/* class Solution {
+ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
 
@@ -10,9 +10,9 @@ public:
          return {};
     }
 
-}; */
+}; 
 
-class Solution {
+/* class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         unordered_map<int, int> mp;
@@ -29,4 +29,4 @@ public:
 
         return {};
     }
-};
+}; */
