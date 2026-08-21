@@ -16,7 +16,7 @@ public:
     }
 }; */
 
-class Solution {
+/* class Solution {
 public:
     void generate(string &word, int k) {
         if (word.length() >= k) {
@@ -41,4 +41,23 @@ public:
         return word[k - 1];
     }
 
+}; */
+
+class Solution {
+public:
+    char kthCharacter(long long k) {
+
+        int count = 0;
+
+        while (k > 1) {
+
+            if (k % 2 == 0) {
+                count++;
+            }
+
+            k = (k + 1) / 2;
+        }
+
+        return 'a' + count;
+    }
 };
