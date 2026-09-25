@@ -1,46 +1,90 @@
 class Solution {
 public:
-    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+    bool isCycle(int src, vector<bool>& vis, vector<bool>& rec,
+                 vector<vector<int>>& graph) {
 
-        vector<vector<int>> adj(numCourses);
-        vector<int> indegree(numCourses, 0);
+        vis[src] = true;
+        rec[src] = true;
 
-        // Build graph and indegree
-        for (auto &edge : prerequisites) {
-            int course = edge[0];
-            int prereq = edge[1];
+        for (int i = 0; i < graph.size(); i++) {
 
-            adj[prereq].push_back(course);
-            indegree[course]++;
+            // [course, prerequisite]
+            int u = graph[i][1];
+            int v = graph[i][0];
+
+            if (u == src) {
+
+                if (!vis[v]) {
+                    if (isCycle(v, vis, rec, graph)) {
+                        return true;
+                    }
+                } else if (rec[v]) {
+                    return true;
+                }
+            }
         }
 
-        queue<int> q;
+        rec[src] = false;
+        return false;
+    }
 
-        // Push all nodes with indegree 0
-        for (int i = 0; i < numCourses; i++) {
-            if (indegree[i] == 0)
-                q.push(i);
+    void topoSort(int src, vector<bool>& vis, stack<int>& s,
+                  vector<vector<int>>& graph) {
+
+        vis[src] = true;
+
+        for (int i = 0; i < graph.size(); i++) {
+
+            int u = graph[i][1];
+            int v = graph[i][0];
+
+            if (u == src) {
+
+                if (!vis[v]) {
+                    topoSort(v, vis, s, graph);
+                }
+            }
+        }
+
+        s.push(src);
+    }
+
+    vector<int> findOrder(int numCourses, vector<vector<int>>& graph) {
+
+        int V = numCourses;
+
+        vector<bool> vis(V, false);
+        vector<bool> rec(V, false);
+
+        // Cycle detection
+        for (int i = 0; i < V; i++) {
+
+            if (!vis[i]) {
+
+                if (isCycle(i, vis, rec, graph)) {
+                    return {};
+                }
+            }
+        }
+
+        // Topological Sort
+        vector<bool> vis2(V, false);
+        stack<int> s;
+
+        for (int i = 0; i < V; i++) {
+
+            if (!vis2[i]) {
+                topoSort(i, vis2, s, graph);
+            }
         }
 
         vector<int> ans;
 
-        while (!q.empty()) {
-            int node = q.front();
-            q.pop();
+        while (!s.empty()) {
 
-            ans.push_back(node);
-
-            for (int neighbour : adj[node]) {
-                indegree[neighbour]--;
-
-                if (indegree[neighbour] == 0)
-                    q.push(neighbour);
-            }
+            ans.push_back(s.top());
+            s.pop();
         }
-
-        // If cycle exists
-        if (ans.size() != numCourses)
-            return {};
 
         return ans;
     }
