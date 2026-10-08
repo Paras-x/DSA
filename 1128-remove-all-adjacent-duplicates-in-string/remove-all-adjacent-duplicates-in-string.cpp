@@ -1,42 +1,22 @@
-/* class Solution {
-public:
-    string removeDuplicates(string s) {
-        string result = "";
-
-        for (char c : s) {
-            if (!result.empty() && result.back() == c) {
-                result.pop_back(); // remove duplicate
-            } else {
-                result.push_back(c); // add character
-            }
-        }
-
-        return result;
-    }
-}; */
-
 class Solution {
 public:
     string removeDuplicates(string s) {
-        stack<char> st1;
+        string ans = s;
 
-        for (char c : s) {
-            if (st1.empty()) {
-                st1.push(c);
+        int i = 0;
 
-            } else if (st1.top() == c) {
-                st1.pop();
+        while (i + 1 < ans.length()) {
+
+            if (ans[i] == ans[i + 1]) {
+                ans.erase(i, 2);
+
+                if (i > 0) {
+                    i--;
+                }
             } else {
-                st1.push(c);
+                i++;
             }
         }
-        string ans = "";
-        while (!st1.empty()) {
-            ans += st1.top();
-            st1.pop();
-        }
-
-        reverse(ans.begin(), ans.end());
 
         return ans;
     }
