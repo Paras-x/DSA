@@ -1,15 +1,18 @@
+
 class Solution {
 public:
-    bool dfs(int node, int destination, vector<vector<int>>& adj, vector<bool>& visited) {
-        if(node == destination) {
+    bool dfs(int src, int dest, vector<bool>& vis,
+             vector<vector<int>>& adj) {
+
+        if (src == dest) {
             return true;
         }
 
-        visited[node] = true;
+        vis[src] = true;
 
-        for(int neighbour : adj[node]) {
-            if(!visited[neighbour]) {
-                if(dfs(neighbour, destination, adj, visited)) {
+        for (int neighbour : adj[src]) {
+            if (!vis[neighbour]) {
+                if (dfs(neighbour, dest, vis, adj)) {
                     return true;
                 }
             }
@@ -18,10 +21,13 @@ public:
         return false;
     }
 
-    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+    bool validPath(int n, vector<vector<int>>& edges, int src,
+                   int dest) {
+
         vector<vector<int>> adj(n);
 
-        for(auto& edge : edges) {
+        // Build an undirected graph
+        for (auto& edge : edges) {
             int u = edge[0];
             int v = edge[1];
 
@@ -29,8 +35,8 @@ public:
             adj[v].push_back(u);
         }
 
-        vector<bool> visited(n, false);
+        vector<bool> vis(n, false);
 
-        return dfs(source, destination, adj, visited);
+        return dfs(src, dest, vis, adj);
     }
 };
