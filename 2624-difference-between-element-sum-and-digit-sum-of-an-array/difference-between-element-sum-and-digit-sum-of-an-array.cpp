@@ -1,20 +1,20 @@
 class Solution {
 public:
     int differenceOfSum(vector<int>& nums) {
+        int sum = 0;
+        int sum1 = 0;
 
-        int sumA = 0;
-        int sumB = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
 
-        for (int num : nums){
-            sumA += num;
+            int n = nums[i];
 
-    
-        while (num > 0) {
-            int digit = num % 10;
-            sumB += digit;
-            num /= 10;
+            while (n > 0) {
+                int r = n % 10;
+                sum1 += r;
+                n = n / 10;
+            }
         }
-}
-        return abs(sumA - sumB);
+        return abs(sum - sum1);
     }
 };
