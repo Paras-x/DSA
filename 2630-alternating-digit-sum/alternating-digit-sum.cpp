@@ -1,28 +1,22 @@
+
 class Solution {
 public:
     int alternateDigitSum(int n) {
-        stack<int> st;
-
-        while (n > 0) {
-            st.push(n % 10);
-            n /= 10;
-        }
+        string s = to_string(n);
 
         int sum = 0;
-        int pos = 1;
 
-        while (!st.empty()) {
-            int digit = st.top();
-            st.pop();
+        for (int i = 0; i < s.size(); i++) {
+            int digit = s[i] - '0';
 
-            if (pos % 2 == 1)
+            if (i % 2 == 0) {
                 sum += digit;
-            else
+            } else {
                 sum -= digit;
-
-            pos++;
+            }
         }
 
         return sum;
     }
 };
+
