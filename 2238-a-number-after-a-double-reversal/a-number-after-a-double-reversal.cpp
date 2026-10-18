@@ -1,7 +1,7 @@
-class Solution {
+/* class Solution {
 public:
     bool isSameAfterReversals(int num) {
-        int p = num;
+        int p = num; // brute force
         int v = 0;
         int count = 0;
 
@@ -29,6 +29,23 @@ public:
             return true;
         } else {
             return false;
+        }
+    }
+}; */
+
+class Solution {
+public:
+    bool isSameAfterReversals(int num) {
+        if (num == 0) {
+            return true;
+        }
+
+        int r = num % 10;
+
+        if (r == 0) {
+            return false;
+        } else {
+            return true;
         }
     }
 };
