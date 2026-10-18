@@ -1,7 +1,7 @@
 class Solution {
 public:
     int countDistinctIntegers(vector<int>& nums) {
-        unordered_map<int, int> mp;
+        // unordered_map<int, int> mp;
         vector<int> copy = nums;
 
         for (int i = 0; i < nums.size(); i++) {
@@ -16,9 +16,7 @@ public:
 
             copy.push_back(rev);
         }
-        for (int i = 0; i < copy.size(); i++) {
-            mp[copy[i]]++;
-        }
-        return mp.size();
+        unordered_set<int> st(copy.begin(), copy.end());
+        return st.size();
     }
 };
