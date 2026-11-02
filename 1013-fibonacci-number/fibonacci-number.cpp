@@ -1,17 +1,17 @@
 class Solution {
 public:
-    int fib(int n) {
+    int fibo(int n, vector<int>& dp) {
         if (n <= 1)
             return n;
-
-       int p1 = 0;
-       int p2 = 1;
-        for (int i = 2; i <= n; i++) {
-            int curr = p1 + p2;
-            p1 = p2;
-            p2 = curr;
+        if (dp[n] != -1) {
+            return dp[n];
         }
-        return p2;
-    }
 
+        return dp[n] = fibo(n - 1, dp) + fibo(n - 2, dp);
+    }
+    int fib(int n) {
+        vector<int> dp(n + 1, -1);
+        int ans = fibo(n, dp);
+        return ans;
+    }
 };
