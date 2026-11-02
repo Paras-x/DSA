@@ -1,26 +1,32 @@
 class Solution {
 public:
-    int getMaximumGenerated(int n) {
-        //ya condition nhi lagne ke karna runtime error aaya th.
-        if(n == 0) return 0;
-        vector<int> nums(n + 1, 0);
+int solve(vector<int>& dp, int i, int n) {
 
-        nums[0] = 0;
-        nums[1] = 1;
+    if(i == 0) return 0;
+    if(i == 1) return 1;
 
-        for (int i = 1; i < n; i++) {
+    if(dp[i] != -1) return dp[i];
 
-            if (2 * i <= n) {
-                nums[2 * i] = nums[i];
-            }
-
-            if (2 * i + 1 <= n) {
-                nums[2 * i + 1] = nums[i] + nums[i + 1];
-            }
-        }
-
-        int maxi = *max_element(nums.begin(), nums.end());
-
-        return maxi;
+    if(i % 2 == 0) {
+        return dp[i] = solve(dp, i / 2, n);
     }
-    };
+
+    return dp[i] = solve(dp, i / 2, n) + solve(dp, i / 2 + 1, n);
+}
+
+int getMaximumGenerated(int n) {
+
+    if(n == 0) return 0;
+
+    vector<int> dp(n + 1, -1);
+
+    int maxi = 0;
+
+    for(int i = 0; i <= n; i++) {
+        maxi = max(maxi, solve(dp, i, n));
+    }
+
+    return maxi;
+}
+
+};
